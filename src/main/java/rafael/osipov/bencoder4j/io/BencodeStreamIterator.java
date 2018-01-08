@@ -21,6 +21,7 @@ public class BencodeStreamIterator {
     /**
      * if isLocalMode, we're looking for `e` suffix of a List/Dictionary object,
      * otherwise we scan until EOF (end of file).
+     *
      * @see rafael.osipov.bencoder4j.model.BencodedList
      * @see rafael.osipov.bencoder4j.model.BencodedDictionary
      */
@@ -28,6 +29,7 @@ public class BencodeStreamIterator {
 
     /**
      * Constructs global iterator, that processes the stream until its end.
+     *
      * @param is input stream to work on.
      */
     public BencodeStreamIterator(InputStream is) {
@@ -37,6 +39,7 @@ public class BencodeStreamIterator {
 
     /**
      * Constructs local iterator, that processes stream to read elements of List/Dictionary object.
+     *
      * @param bsr reference to bencoder4j stream reader.
      * @see rafael.osipov.bencoder4j.model.BencodedList
      * @see rafael.osipov.bencoder4j.model.BencodedDictionary
@@ -48,6 +51,7 @@ public class BencodeStreamIterator {
 
     /**
      * Returns true, if the next call of next() method will return a correct object.
+     *
      * @return see method description above.
      * @throws IOException if there's an I/O exception occurred.
      */
@@ -55,13 +59,14 @@ public class BencodeStreamIterator {
         final int streamByte = bsr.read();
         bsr.unread(streamByte);
 
-        return isLocalMode ? ((char)streamByte != BencodedObject.SERIALIZED_SUFFIX) : ((byte)streamByte != -1);
+        return isLocalMode ? ((char) streamByte != BencodedObject.SERIALIZED_SUFFIX) : ((byte) streamByte != -1);
     }
 
     /**
      * Gets the next bencoded object from the stream.
+     *
      * @return bencoded object from the stream.
-     * @throws IOException if there's an input/output error occurred.
+     * @throws IOException            if there's an input/output error occurred.
      * @throws BencodeFormatException if there's a bencoding format error occurred.
      */
     public BencodedObject next() throws IOException, BencodeFormatException {
@@ -73,32 +78,32 @@ public class BencodeStreamIterator {
         final int objectPrefix = bsr.read();
         bsr.unread(objectPrefix);
 
-        if ((byte)objectPrefix == -1) {
+        if ((byte) objectPrefix == -1) {
             throw new BencodeFormatException("Unexpected end of the stream");
         }
 
         BencodedObject bencodedObject;
         switch (objectPrefix) {
-        case BencodedInteger.SERIALIZED_PREFIX:
-            bencodedObject = new BencodedInteger(bsr);
-            break;
+            case BencodedInteger.SERIALIZED_PREFIX:
+                bencodedObject = new BencodedInteger(bsr);
+                break;
 
-        case BencodedList.SERIALIZED_PREFIX:
-            bencodedObject = new BencodedList(bsr);
-            break;
+            case BencodedList.SERIALIZED_PREFIX:
+                bencodedObject = new BencodedList(bsr);
+                break;
 
-        case BencodedDictionary.SERIALIZED_PREFIX:
-            bencodedObject = new BencodedDictionary(bsr);
-            break;
+            case BencodedDictionary.SERIALIZED_PREFIX:
+                bencodedObject = new BencodedDictionary(bsr);
+                break;
 
-        default:
-            if (Character.isDigit(objectPrefix)) {
-                bencodedObject = new BencodedByteSequence(bsr);
-            } else {
-                throw new BencodeFormatException("Unexpected character in the stream: " + (char)objectPrefix);
-            }
+            default:
+                if (Character.isDigit(objectPrefix)) {
+                    bencodedObject = new BencodedByteSequence(bsr);
+                } else {
+                    throw new BencodeFormatException("Unexpected character in the stream: " + (char) objectPrefix);
+                }
 
-            break;
+                break;
         }
 
         return bencodedObject;

@@ -19,7 +19,6 @@ import java.util.*;
  * and at least one of the threads modifies the object structurally,
  * it must be synchronized externally.
  * </p>
- *
  */
 public final class BencodedDictionary extends BencodedObject {
 
@@ -43,12 +42,9 @@ public final class BencodedDictionary extends BencodedObject {
     /**
      * Constructs the class instance using input stream data.
      *
-     * @param bsr
-     *            input stream reader.
-     * @throws BencodeFormatException
-     *             if there's a problem with bencoding format.
-     * @throws IOException
-     *             if there's an input/output error occurred.
+     * @param bsr input stream reader.
+     * @throws BencodeFormatException if there's a problem with bencoding format.
+     * @throws IOException            if there's an input/output error occurred.
      */
     public BencodedDictionary(BencodeStreamReader bsr) throws BencodeFormatException, IOException {
         super();
@@ -92,6 +88,7 @@ public final class BencodedDictionary extends BencodedObject {
 
     /**
      * Returns true, if the class instance contains either list or dictionary.
+     *
      * @return check the method description above.
      */
     public boolean isCompositeObject() {
@@ -101,8 +98,7 @@ public final class BencodedDictionary extends BencodedObject {
     /**
      * Gets object from the dictionary by key.
      *
-     * @param keyObject
-     *            key to be used to get the object from the dictionary.
+     * @param keyObject key to be used to get the object from the dictionary.
      * @return object from the dictionary mapped to the provided keyObject.
      */
     public BencodedObject get(BencodedByteSequence keyObject) {
@@ -112,8 +108,7 @@ public final class BencodedDictionary extends BencodedObject {
     /**
      * Gets object from the dictionary by key.
      *
-     * @param key
-     *            key to be used to get the object from the dictionary, string
+     * @param key key to be used to get the object from the dictionary, string
      *            will be converted to BencodedByteSequence object.
      * @return object from the dictionary mapped to the provided key.
      */
@@ -143,8 +138,7 @@ public final class BencodedDictionary extends BencodedObject {
     /**
      * Compares the class instance with another instance of this class.
      *
-     * @param obj
-     *            reference to another instance of this class.
+     * @param obj reference to another instance of this class.
      * @return true, if instances are equal.
      */
     @Override
@@ -169,10 +163,8 @@ public final class BencodedDictionary extends BencodedObject {
     /**
      * Puts an object to the dictionary.
      *
-     * @param keyObject
-     *            key to be used to put the object to the dictionary.
-     * @param bencodedObject
-     *            object, to put to the dictionary.
+     * @param keyObject      key to be used to put the object to the dictionary.
+     * @param bencodedObject object, to put to the dictionary.
      */
     public void put(BencodedByteSequence keyObject, BencodedObject bencodedObject) {
         checkPutParameters(keyObject, bencodedObject);
@@ -182,11 +174,9 @@ public final class BencodedDictionary extends BencodedObject {
     /**
      * Puts an object to the dictionary.
      *
-     * @param key
-     *            key to be used to put the object to the dictionary, the string
-     *            will be converted to BencodedByteSequence instance.
-     * @param bencodedObject
-     *            object, to put to the dictionary.
+     * @param key            key to be used to put the object to the dictionary, the string
+     *                       will be converted to BencodedByteSequence instance.
+     * @param bencodedObject object, to put to the dictionary.
      */
     public void put(String key, BencodedObject bencodedObject) {
         checkPutParameters(key, bencodedObject);
@@ -221,10 +211,8 @@ public final class BencodedDictionary extends BencodedObject {
     /**
      * Writes the class instance to the output stream.
      *
-     * @param os
-     *            output stream instance.
-     * @throws IOException
-     *             if there's an input/output error occurred.
+     * @param os output stream instance.
+     * @throws IOException                if there's an input/output error occurred.
      * @throws CircularReferenceException if there's a circular reference found upon serializing the object.
      */
     @Override
@@ -246,10 +234,8 @@ public final class BencodedDictionary extends BencodedObject {
     /**
      * Checks parameters used for put method for this class.
      *
-     * @param keyObject
-     *            key to be used to put the object to the dictionary.
-     * @param bencodedObject
-     *            object to be put to the dictionary.
+     * @param keyObject      key to be used to put the object to the dictionary.
+     * @param bencodedObject object to be put to the dictionary.
      */
     private void checkPutParameters(Object keyObject, BencodedObject bencodedObject) {
         if (null == keyObject) {

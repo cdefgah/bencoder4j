@@ -7,6 +7,7 @@ public class BencodeFormatException extends Exception {
 
     /**
      * Constructs the exception object.
+     *
      * @param message the problem description.
      */
     public BencodeFormatException(String message) {

@@ -23,7 +23,7 @@ class BencodeStreamIteratorTest {
 
         assertFalse(bsi.hasNext());
         assertThrows(NoSuchElementException.class, bsi::next,
-                            "Iterator behaves incorrectly upon getting the next element when it is exhausted");
+                "Iterator behaves incorrectly upon getting the next element when it is exhausted");
     }
 
 
@@ -36,7 +36,7 @@ class BencodeStreamIteratorTest {
         assertTrue(bsi.hasNext());
         BencodedObject bencodedObject1 = bsi.next();
         assertTrue(bencodedObject1 instanceof BencodedInteger);
-        assertEquals(1, (((BencodedInteger)bencodedObject1).getValue()) );
+        assertEquals(1, (((BencodedInteger) bencodedObject1).getValue()));
 
         assertTrue(bsi.hasNext());
         BencodedObject bencodedObject2 = bsi.next();
@@ -47,7 +47,7 @@ class BencodeStreamIteratorTest {
         BencodedObject bencodedObject3 = bsi.next();
         assertTrue(bencodedObject3 instanceof BencodedList);
 
-        BencodedList bencodedList = (BencodedList)bencodedObject3;
+        BencodedList bencodedList = (BencodedList) bencodedObject3;
         assertEquals(1, bencodedList.size());
 
         BencodedInteger bencodedInteger = (BencodedInteger) bencodedList.get(0);
@@ -68,7 +68,7 @@ class BencodeStreamIteratorTest {
         BencodedObject dictionaryElementValue = dictionary.get(key);
         assertTrue(dictionaryElementValue instanceof BencodedInteger);
 
-        assertEquals(5, ((BencodedInteger)dictionaryElementValue).getValue());
+        assertEquals(5, ((BencodedInteger) dictionaryElementValue).getValue());
 
         assertFalse(bsi.hasNext());
     }
@@ -82,8 +82,8 @@ class BencodeStreamIteratorTest {
 
         BencodeFormatException exception =
                 assertThrows(BencodeFormatException.class, bsi::next,
-                                                "BencodeStreamIterator behaves incorrectly " +
-                                                                       "on stream contents with incorrect length part");
+                        "BencodeStreamIterator behaves incorrectly " +
+                                "on stream contents with incorrect length part");
 
         assertEquals("Unexpected character in the stream: x",
                 exception.getMessage(),

@@ -43,7 +43,7 @@ public final class BencodedByteSequence extends BencodedObject implements Compar
             final int sequenceLength = Integer.parseInt(sequenceLengthStrValue);
             this.sequence = new byte[sequenceLength];
             final int bytesRead = bsr.readByteSequence(this.sequence);
-            if ( bytesRead != sequenceLength ) {
+            if (bytesRead != sequenceLength) {
                 throw new BencodeFormatException("Unexpected end of the byte sequence stream");
             }
         } catch (NumberFormatException nfe) {
@@ -57,7 +57,7 @@ public final class BencodedByteSequence extends BencodedObject implements Compar
      * @param sequence byte array to be used as source for byte sequence.
      */
     public BencodedByteSequence(byte[] sequence) {
-        if ( (sequence != null) && (sequence.length > 0) ) {
+        if ((sequence != null) && (sequence.length > 0)) {
             this.sequence = new byte[sequence.length];
             System.arraycopy(sequence, 0, this.sequence, 0, sequence.length);
         } else {
@@ -71,7 +71,7 @@ public final class BencodedByteSequence extends BencodedObject implements Compar
      * @param string initial string to be used as source for byte sequence.
      */
     public BencodedByteSequence(String string) {
-        if ( (string != null) && (string.length() > 0) ) {
+        if ((string != null) && (string.length() > 0)) {
             this.sequence = string.getBytes(StandardCharsets.UTF_8);
         } else {
             this.sequence = new byte[0];

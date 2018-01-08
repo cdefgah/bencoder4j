@@ -69,6 +69,7 @@ public final class BencodedList extends BencodedObject implements Iterable<Benco
 
     /**
      * Returns true, if the class instance contains either list or dictionary.
+     *
      * @return check the method description above.
      */
     public boolean isCompositeObject() {
@@ -159,6 +160,7 @@ public final class BencodedList extends BencodedObject implements Iterable<Benco
 
     /**
      * Returns true if the list contains the specified object.
+     *
      * @param object element whose presence in this list is to be tested.
      * @return true, if element has been found.
      */

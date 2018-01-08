@@ -177,7 +177,7 @@ class BencodedDictionaryTest {
     @Test
     void serializeEmptyDictionary() throws IOException, CircularReferenceException {
         String expectedSerializedForm = String.valueOf(BencodedDictionary.SERIALIZED_PREFIX) +
-                                                                   String.valueOf(BencodedDictionary.SERIALIZED_SUFFIX);
+                String.valueOf(BencodedDictionary.SERIALIZED_SUFFIX);
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
@@ -280,14 +280,14 @@ class BencodedDictionaryTest {
         Iterator<BencodedByteSequence> keysIterator = dictionary.getKeysIterator();
 
         assertAll("Testing dictionary keys iterator",
-                    () -> assertTrue(keysIterator.hasNext()),
-                    () -> assertEquals(key2, keysIterator.next()),
-                    () -> assertTrue(keysIterator.hasNext()),
-                    () -> assertEquals(key3, keysIterator.next()),
-                    () -> assertTrue(keysIterator.hasNext()),
-                    () -> assertEquals(key1, keysIterator.next()),
-                    () -> assertFalse(keysIterator.hasNext())
-                );
+                () -> assertTrue(keysIterator.hasNext()),
+                () -> assertEquals(key2, keysIterator.next()),
+                () -> assertTrue(keysIterator.hasNext()),
+                () -> assertEquals(key3, keysIterator.next()),
+                () -> assertTrue(keysIterator.hasNext()),
+                () -> assertEquals(key1, keysIterator.next()),
+                () -> assertFalse(keysIterator.hasNext())
+        );
     }
 
 
@@ -558,13 +558,13 @@ class BencodedDictionaryTest {
 
         BencodeFormatException exception =
                 assertThrows(BencodeFormatException.class, () ->
-                        new BencodedDictionary(bsr),
+                                new BencodedDictionary(bsr),
                         "BencodedDictionary constructor behaves incorrectly on the stream with missing key");
 
         assertEquals("Incorrect object used as dictionary key. Expected: '" +
                         BencodedByteSequence.class.getCanonicalName() + "' but get: '" +
-                                            BencodedInteger.class.getCanonicalName() + "'",
-                        exception.getMessage(),
+                        BencodedInteger.class.getCanonicalName() + "'",
+                exception.getMessage(),
                 "Unexpected message in correctly thrown exception");
     }
 
@@ -578,7 +578,7 @@ class BencodedDictionaryTest {
 
         BencodeFormatException exception =
                 assertThrows(BencodeFormatException.class, () ->
-                        new BencodedDictionary(bsr),
+                                new BencodedDictionary(bsr),
                         "BencodedDictionary constructor behaves incorrectly on the stream with missing suffix");
 
         assertEquals("Unexpected end of the stream",
@@ -596,9 +596,9 @@ class BencodedDictionaryTest {
 
         BencodeFormatException exception =
                 assertThrows(BencodeFormatException.class, () ->
-                        new BencodedDictionary(bsr),
-                            "BencodedDictionary constructor behaves " +
-                                                        "incorrectly on the stream with incorrect prefix");
+                                new BencodedDictionary(bsr),
+                        "BencodedDictionary constructor behaves " +
+                                "incorrectly on the stream with incorrect prefix");
 
         assertEquals("Incorrect stream position, expected prefix character: d",
                 exception.getMessage(),
@@ -615,18 +615,19 @@ class BencodedDictionaryTest {
 
         BencodeFormatException exception =
                 assertThrows(BencodeFormatException.class, () ->
-                        new BencodedDictionary(bsr),
-                            "BencodedDictionary constructor behaves incorrectly on the stream " +
-                                                            "where dictionary key is present, but value is not");
+                                new BencodedDictionary(bsr),
+                        "BencodedDictionary constructor behaves incorrectly on the stream " +
+                                "where dictionary key is present, but value is not");
 
         assertEquals("Unexpected end of the stream for dictionary. " +
-                                                            "'Key' object is present, but 'value' object is not.",
+                        "'Key' object is present, but 'value' object is not.",
                 exception.getMessage(),
                 "Unexpected message in correctly thrown exception");
     }
 
     /**
      * Tries to write a dictionary to the stream to emulate circular reference exception situation.
+     *
      * @param dictionary dictionary to be written to output stream.
      */
     private void tryAndThrowCircularReferenceException(BencodedDictionary dictionary) {

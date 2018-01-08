@@ -53,12 +53,12 @@ class BencodedIntegerTest {
     @SuppressWarnings("ConstantConditions")
     @Test
     void compareWithNull() {
-       assertThrows(NullPointerException.class, () -> {
-         BencodedInteger bi = new BencodedInteger(Long.MIN_VALUE);
-         bi.compareTo(null);
-       }, "The class does not conform to the Oracle recommendation for compareTo() " +
-                                "when there is a null argument passed," +
-                                "this method should throw NullPointerException, but it does not");
+        assertThrows(NullPointerException.class, () -> {
+            BencodedInteger bi = new BencodedInteger(Long.MIN_VALUE);
+            bi.compareTo(null);
+        }, "The class does not conform to the Oracle recommendation for compareTo() " +
+                "when there is a null argument passed," +
+                "this method should throw NullPointerException, but it does not");
     }
 
     @Test
@@ -68,7 +68,7 @@ class BencodedIntegerTest {
 
         // checking for: sgn(x.compareTo(y)) == -sgn(y.compareTo(x))
         assertEquals(Integer.signum(bint1.compareTo(bint2)),
-                   -1 * Integer.signum(bint2.compareTo(bint1)),
+                -1 * Integer.signum(bint2.compareTo(bint1)),
                 "compareTo() method of comparable objects should work in both directions");
     }
 
@@ -94,7 +94,7 @@ class BencodedIntegerTest {
         assertAll("x.compareTo(y)==0 implies that sgn(x.compareTo(z)) == sgn(y.compareTo(z)), for all z," +
                         "(x.compareTo(y)==0) == (x.equals(y))",
 
-                () -> assertEquals( 0, x.compareTo(y)),
+                () -> assertEquals(0, x.compareTo(y)),
                 () -> assertEquals(Integer.signum(x.compareTo(z)), Integer.signum(y.compareTo(z))),
                 () -> assertEquals(x, y)
         );
@@ -222,7 +222,7 @@ class BencodedIntegerTest {
 
             new BencodedInteger(bsr);
         }, "Stream reader behaves incorrectly on serialized numeric " +
-                                                                        "value with leading zero");
+                "value with leading zero");
 
         assertEquals("Incorrect character sequence for the value",
                 exception.getMessage(),
@@ -243,7 +243,7 @@ class BencodedIntegerTest {
 
             new BencodedInteger(bsr);
         }, "Stream reader behaves incorrectly on " +
-                                                    "serialized numeric value with negative zero");
+                "serialized numeric value with negative zero");
 
         assertEquals("Incorrect character sequence for the value",
                 exception.getMessage(),
@@ -254,20 +254,20 @@ class BencodedIntegerTest {
     void loadingFromStreamValueWithIncorrectPrefix() {
 
         BencodeFormatException exception =
-            assertThrows(BencodeFormatException.class, () -> {
-                // consciously incorrect form of serialized bencoded integer value
-                String streamContents = "x3e";
+                assertThrows(BencodeFormatException.class, () -> {
+                    // consciously incorrect form of serialized bencoded integer value
+                    String streamContents = "x3e";
 
-                InputStream is =
-                        new ByteArrayInputStream(streamContents.getBytes(StandardCharsets.UTF_8));
-                BencodeStreamReader bsr = new BencodeStreamReader(is);
+                    InputStream is =
+                            new ByteArrayInputStream(streamContents.getBytes(StandardCharsets.UTF_8));
+                    BencodeStreamReader bsr = new BencodeStreamReader(is);
 
-                new BencodedInteger(bsr);
-            }, "Stream reader behaves incorrectly on serialized numeric value " +
-                                                                           "with incorrect prefix");
+                    new BencodedInteger(bsr);
+                }, "Stream reader behaves incorrectly on serialized numeric value " +
+                        "with incorrect prefix");
 
         assertEquals("Incorrect stream position, expected prefix character: i",
-                                            exception.getMessage(),
+                exception.getMessage(),
                 "Unexpected message in correctly thrown exception");
     }
 
@@ -280,16 +280,16 @@ class BencodedIntegerTest {
                     String streamContents = "i3f";
 
                     InputStream is =
-                          new ByteArrayInputStream(streamContents.getBytes(StandardCharsets.UTF_8));
+                            new ByteArrayInputStream(streamContents.getBytes(StandardCharsets.UTF_8));
                     BencodeStreamReader bsr = new BencodeStreamReader(is);
 
                     new BencodedInteger(bsr);
                 }, "Stream reader behaves incorrectly on serialized numeric value " +
-                                                                           "with incorrect suffix");
+                        "with incorrect suffix");
 
         assertEquals("Stop symbol: 'e' was not reached",
-                    exception.getMessage(),
-                    "Unexpected message in correctly thrown exception");
+                exception.getMessage(),
+                "Unexpected message in correctly thrown exception");
     }
 
 
@@ -329,8 +329,8 @@ class BencodedIntegerTest {
     void writeObjectWorksCorrectly() throws IOException {
         long referenceNumericValue = Long.MIN_VALUE;
         String expectedSerializedForm = BencodedInteger.SERIALIZED_PREFIX +
-                                                    String.valueOf(referenceNumericValue) +
-                                                                BencodedInteger.SERIALIZED_SUFFIX;
+                String.valueOf(referenceNumericValue) +
+                BencodedInteger.SERIALIZED_SUFFIX;
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 

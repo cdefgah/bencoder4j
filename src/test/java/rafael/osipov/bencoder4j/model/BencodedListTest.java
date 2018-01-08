@@ -37,7 +37,7 @@ class BencodedListTest {
             bencodedList.add(null);
 
         }, "BencodedList should throw illegal argument exception on attempt to " +
-                                                                                "add a null element. But it does not.");
+                "add a null element. But it does not.");
 
         assertEquals("Null objects are not allowed for BencodedList",
                 exception.getMessage(),
@@ -488,10 +488,10 @@ class BencodedListTest {
         bencodedList3.add(bbs3);
 
         String expectedExceptionMessage = "Upon writing to stream, circular reference found in " +
-                                                                                  BencodedList.class.getCanonicalName();
+                BencodedList.class.getCanonicalName();
         String unexpectedExceptionMessageDiagnostics = "Unexpected message in correctly thrown exception";
         String noExceptionMessage = "BencodedList with circular reference inside should throw " +
-                                            "circular reference exception upon writing to the stream. But it does not.";
+                "circular reference exception upon writing to the stream. But it does not.";
 
         CircularReferenceException exception1 = assertThrows(CircularReferenceException.class, () -> {
             // consciously trying to serialize a list with circular reference inside
@@ -579,16 +579,16 @@ class BencodedListTest {
         long secondNumber = 456;
 
         String serializedFirstNumber = BencodedInteger.SERIALIZED_PREFIX +
-                                                        String.valueOf(firstNumber) + BencodedInteger.SERIALIZED_SUFFIX;
+                String.valueOf(firstNumber) + BencodedInteger.SERIALIZED_SUFFIX;
 
         String serializedSecondNumber = BencodedInteger.SERIALIZED_PREFIX +
-                                                       String.valueOf(secondNumber) + BencodedInteger.SERIALIZED_SUFFIX;
+                String.valueOf(secondNumber) + BencodedInteger.SERIALIZED_SUFFIX;
 
         String expectedSerializedForm =
                 BencodedList.SERIALIZED_PREFIX +
-                        serializedFirstNumber  +
+                        serializedFirstNumber +
                         serializedSecondNumber +
-                BencodedList.SERIALIZED_SUFFIX;
+                        BencodedList.SERIALIZED_SUFFIX;
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
@@ -620,7 +620,7 @@ class BencodedListTest {
 
         String streamContents =
                 BencodedList.SERIALIZED_PREFIX +
-                        serializedFirstNumber  +
+                        serializedFirstNumber +
                         serializedSecondNumber +
                         BencodedList.SERIALIZED_SUFFIX;
 
@@ -638,10 +638,9 @@ class BencodedListTest {
                 () -> assertTrue(secondListElement instanceof BencodedInteger));
 
         assertAll("Deserialized list element values",
-                () -> assertEquals(firstNumber, ((BencodedInteger)firstListElement).getValue()),
-                () -> assertEquals(secondNumber, ((BencodedInteger)secondListElement).getValue()));
+                () -> assertEquals(firstNumber, ((BencodedInteger) firstListElement).getValue()),
+                () -> assertEquals(secondNumber, ((BencodedInteger) secondListElement).getValue()));
     }
-
 
 
     @Test
@@ -654,7 +653,7 @@ class BencodedListTest {
         BencodeFormatException exception =
                 assertThrows(BencodeFormatException.class, () ->
                         new BencodedList(bsr), "BencodedList constructor behaves incorrectly on incomplete " +
-                                                                                 "serialized data with correct prefix");
+                        "serialized data with correct prefix");
 
         assertEquals("Unexpected end of the stream",
                 exception.getMessage(),
@@ -672,7 +671,7 @@ class BencodedListTest {
         BencodeFormatException exception =
                 assertThrows(BencodeFormatException.class, () -> new BencodedList(bsr),
                         "BencodedList constructor behaves incorrectly on incomplete serialized " +
-                        "data with incorrect prefix");
+                                "data with incorrect prefix");
 
         assertEquals("Incorrect stream position, expected prefix character: l",
                 exception.getMessage(),
@@ -683,7 +682,7 @@ class BencodedListTest {
     @Test
     void loadingFromIncompleteStreamWhereSuffixIsNotProvided() {
         String serializedFirstNumber = BencodedInteger.SERIALIZED_PREFIX +
-                                                               String.valueOf(123) + BencodedInteger.SERIALIZED_SUFFIX;
+                String.valueOf(123) + BencodedInteger.SERIALIZED_SUFFIX;
 
         String streamContents = BencodedList.SERIALIZED_PREFIX + serializedFirstNumber;
 
@@ -692,9 +691,9 @@ class BencodedListTest {
 
         BencodeFormatException exception =
                 assertThrows(BencodeFormatException.class, () ->
-                        new BencodedList(bsr),
+                                new BencodedList(bsr),
                         "BencodedList constructor behaves incorrectly on incomplete serialized " +
-                                                                                           "data without list suffix");
+                                "data without list suffix");
 
         assertEquals("Unexpected end of the stream",
                 exception.getMessage(),

@@ -29,19 +29,17 @@ public final class BencodedInteger extends BencodedObject implements Comparable<
      * InputStream instance.
      *
      * @param bsr stream reader to be used for deserialization purposes.
-     * @throws IOException
-     *             if there's an I/O error occurred upon the processing.
-     * @throws BencodeFormatException
-     *             if there are b-encoding format errors found upon the
-     *             processing.
+     * @throws IOException            if there's an I/O error occurred upon the processing.
+     * @throws BencodeFormatException if there are b-encoding format errors found upon the
+     *                                processing.
      */
     public BencodedInteger(BencodeStreamReader bsr) throws IOException, BencodeFormatException {
         super();
 
         if (bsr.read() != SERIALIZED_PREFIX) {
             throw new BencodeFormatException(
-                                          "Incorrect stream position, " +
-                                                  "expected prefix character: " + SERIALIZED_PREFIX);
+                    "Incorrect stream position, " +
+                            "expected prefix character: " + SERIALIZED_PREFIX);
         }
 
         final String charSequenceBody = bsr.readCharSequence(SERIALIZED_SUFFIX);
@@ -61,8 +59,7 @@ public final class BencodedInteger extends BencodedObject implements Comparable<
     /**
      * Class constructor.
      *
-     * @param value
-     *            value to initialize the class instance.
+     * @param value value to initialize the class instance.
      */
     public BencodedInteger(long value) {
         super();
@@ -72,8 +69,7 @@ public final class BencodedInteger extends BencodedObject implements Comparable<
     /**
      * Compares the class instance with another instance of this class.
      *
-     * @param obj
-     *            reference to another instance of this class.
+     * @param obj reference to another instance of this class.
      * @return true, if instances are equal.
      */
     @Override
@@ -83,7 +79,6 @@ public final class BencodedInteger extends BencodedObject implements Comparable<
         BencodedInteger that = (BencodedInteger) obj;
         return value == that.value;
     }
-
 
     /**
      * Calculates and returns hashcode for the class instance.
@@ -118,13 +113,11 @@ public final class BencodedInteger extends BencodedObject implements Comparable<
     /**
      * Writes the class instance to the output stream.
      *
-     * @param os
-     *            output stream instance.
-     * @throws IOException
-     *             if there's an input/output error occurred.
+     * @param os output stream instance.
+     * @throws IOException if there's an input/output error occurred.
      */
     @Override
-    public void writeObject(OutputStream os) throws IOException  {
+    public void writeObject(OutputStream os) throws IOException {
 
         os.write(SERIALIZED_PREFIX);
 
@@ -138,6 +131,7 @@ public final class BencodedInteger extends BencodedObject implements Comparable<
     /**
      * Compares this object with the specified object for order. Returns a negative integer, zero,
      * or a positive integer as this object is less than, equal to, or greater than the specified object.
+     *
      * @param anotherObject the object to be compared.
      * @return a negative integer, zero, or a positive integer as this object is less than,
      * equal to, or greater than the specified object.

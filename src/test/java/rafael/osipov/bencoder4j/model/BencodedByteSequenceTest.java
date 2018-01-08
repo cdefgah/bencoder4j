@@ -138,7 +138,7 @@ class BencodedByteSequenceTest {
 
         assertAll("x.compareTo(y)==0 implies that sgn(x.compareTo(z)) == sgn(y.compareTo(z)), for all z, " +
                         "(x.compareTo(y)==0) == (x.equals(y)).",
-                () -> assertEquals( 0, x.compareTo(y)),
+                () -> assertEquals(0, x.compareTo(y)),
                 () -> assertEquals(Integer.signum(x.compareTo(z)), Integer.signum(y.compareTo(z))),
                 () -> assertEquals(x, y)
         );
@@ -245,7 +245,7 @@ class BencodedByteSequenceTest {
     void toStringReturnsCorrectValue() {
         String initialString = "Некое значение ABC-456";
         String expectedStringValue =
-                                Arrays.toString(initialString.getBytes(StandardCharsets.UTF_8));
+                Arrays.toString(initialString.getBytes(StandardCharsets.UTF_8));
         BencodedByteSequence bbs1 = new BencodedByteSequence(initialString);
 
         assertEquals(expectedStringValue, bbs1.toString());
@@ -261,7 +261,7 @@ class BencodedByteSequenceTest {
 
     @Test
     void instantiationFromStreamWorksCorrectlyForLongSequence() throws
-                                                            IOException, BencodeFormatException {
+            IOException, BencodeFormatException {
 
         String referenceStringValue = "Некое строковое значение ABC-0123";
         deserializeSequence(referenceStringValue);
@@ -292,9 +292,9 @@ class BencodedByteSequenceTest {
         BencodeStreamReader bsr = new BencodeStreamReader(is);
 
         BencodeFormatException exception = assertThrows(BencodeFormatException.class, () ->
-                             new BencodedByteSequence(bsr),
-                            "BencodedByteSequence constructor behaves incorrectly on the " +
-                                                                    "stream data with incorrect sequence length");
+                        new BencodedByteSequence(bsr),
+                "BencodedByteSequence constructor behaves incorrectly on the " +
+                        "stream data with incorrect sequence length");
 
         assertEquals("Unexpected end of the byte sequence stream",
                 exception.getMessage(),
@@ -310,9 +310,9 @@ class BencodedByteSequenceTest {
         BencodeStreamReader bsr = new BencodeStreamReader(is);
 
         BencodeFormatException exception = assertThrows(BencodeFormatException.class, () ->
-                new BencodedByteSequence(bsr),
-                        "BencodedByteSequence constructor behaves incorrectly on the " +
-                                                                        "stream data with incorrect sequence length");
+                        new BencodedByteSequence(bsr),
+                "BencodedByteSequence constructor behaves incorrectly on the " +
+                        "stream data with incorrect sequence length");
 
         assertEquals("BencodedByteSequence length cannot be converted to a numeric value",
                 exception.getMessage(),
@@ -328,9 +328,9 @@ class BencodedByteSequenceTest {
         BencodeStreamReader bsr = new BencodeStreamReader(is);
 
         BencodeFormatException exception = assertThrows(BencodeFormatException.class, () ->
-                                                new BencodedByteSequence(bsr),
-                        "BencodedByteSequence constructor behaves incorrectly on the " +
-                                                                        "stream data with incorrect sequence length");
+                        new BencodedByteSequence(bsr),
+                "BencodedByteSequence constructor behaves incorrectly on the " +
+                        "stream data with incorrect sequence length");
 
         assertEquals("BencodedByteSequence length cannot be converted to a numeric value",
                 exception.getMessage(),
@@ -425,14 +425,13 @@ class BencodedByteSequenceTest {
 
         BencodeFormatException exception =
                 assertThrows(BencodeFormatException.class, () ->
-                        new BencodedByteSequence(bsr),
+                                new BencodedByteSequence(bsr),
                         "BencodedByteSequence constructor behaves incorrectly on stream data with missing " +
-                                                                                                "sequence length part");
+                                "sequence length part");
 
         assertEquals("BencodedByteSequence length part is not present in the stream",
                 exception.getMessage(),
                 "Unexpected message in correctly thrown exception");
-
 
 
     }
@@ -445,9 +444,9 @@ class BencodedByteSequenceTest {
 
         BencodeFormatException exception =
                 assertThrows(BencodeFormatException.class, () ->
-                        new BencodedByteSequence(bsr),
-                              "BencodedByteSequence constructor behaves incorrectly " +
-                                                    "on stream data with larger than correct sequence length part");
+                                new BencodedByteSequence(bsr),
+                        "BencodedByteSequence constructor behaves incorrectly " +
+                                "on stream data with larger than correct sequence length part");
 
 
         assertEquals("Unexpected end of the stream",
@@ -458,12 +457,13 @@ class BencodedByteSequenceTest {
 
     /**
      * Deserializes particular sequence to test the class correctness.
+     *
      * @param referenceStringValue string value to serialize and deserialize as byte sequence.
-     * @throws IOException if there's an i/o problem occurred.
+     * @throws IOException            if there's an i/o problem occurred.
      * @throws BencodeFormatException if there's a bencode format problem occurred.
      */
     private static void deserializeSequence(String referenceStringValue) throws
-                                                              IOException, BencodeFormatException {
+            IOException, BencodeFormatException {
 
         byte[] referenceByteSequence = referenceStringValue.getBytes(StandardCharsets.UTF_8);
 

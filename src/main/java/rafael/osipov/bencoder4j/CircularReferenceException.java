@@ -7,6 +7,7 @@ public final class CircularReferenceException extends Exception {
 
     /**
      * Constructs the exception object.
+     *
      * @param message problem description.
      */
     public CircularReferenceException(String message) {

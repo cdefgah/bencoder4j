@@ -23,6 +23,7 @@ public abstract class BencodedObject {
 
     /**
      * Returns true, if the class instance contains either list or dictionary.
+     *
      * @return check the method description above.
      */
     public boolean isCompositeObject() {
@@ -32,7 +33,7 @@ public abstract class BencodedObject {
     /**
      * Returns the collection of composite object values,
      * used to check circular references.
-     *
+     * <p>
      * If your class contains composite (list, map) values, override this method to return true,
      *
      * @return see the method description above.
@@ -48,10 +49,8 @@ public abstract class BencodedObject {
      * not make sense, because the circular reference verification method always returns false for
      * non-composite classes.
      *
-     * @param os
-     *            output stream instance.
-     * @throws IOException
-     *             if there's an input/output error occurred.
+     * @param os output stream instance.
+     * @throws IOException                if there's an input/output error occurred.
      * @throws CircularReferenceException if there's a circular reference detected upon writing to the stream.
      */
     protected void writeObject(OutputStream os) throws IOException, CircularReferenceException {
@@ -86,7 +85,7 @@ public abstract class BencodedObject {
             if (bencodedObject.isCompositeObject()) {
 
                 foundCircularReference = parentNodes.containsKey(bencodedObject)
-                                                            || bencodedObject.isCircularReferenceDetected(parentNodes);
+                        || bencodedObject.isCircularReferenceDetected(parentNodes);
                 if (foundCircularReference) {
                     break;
                 }

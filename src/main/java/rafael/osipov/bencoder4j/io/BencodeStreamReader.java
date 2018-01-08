@@ -18,6 +18,7 @@ public final class BencodeStreamReader {
 
     /**
      * Constructs the reader class instance.
+     *
      * @param is reference to input stream.
      */
     public BencodeStreamReader(InputStream is) {
@@ -26,6 +27,7 @@ public final class BencodeStreamReader {
 
     /**
      * Reads a byte from the stream.
+     *
      * @return byte from the stream, or -1 if the end of the stream is reached.
      * @throws IOException if there's an I/O error occurred.
      */
@@ -35,6 +37,7 @@ public final class BencodeStreamReader {
 
     /**
      * Pushes the byte back to the stream.
+     *
      * @param byte2Unread byte to be pushed back to the stream.
      * @throws IOException if there's an I/O error occurred.
      */
@@ -44,12 +47,13 @@ public final class BencodeStreamReader {
 
     /**
      * Reads byte sequence and returns the qty of read bytes.
+     *
      * @param sequence array to be used as target place upon reading bytes from the stream.
      * @return qty of bytes read, or -1 if the end of the stream has been reached.
      * @throws IOException if there's an input/output error occurred.
      */
     public int readByteSequence(byte[] sequence) throws IOException {
-        if ( (sequence == null) || (sequence.length == 0) ) {
+        if ((sequence == null) || (sequence.length == 0)) {
             return 0;
         }
 
@@ -59,9 +63,10 @@ public final class BencodeStreamReader {
     /**
      * Gets character sequence until specified symbol. Useful when you need
      * to read all characters until 'e' or until ':'.
+     *
      * @param stopSymbol stop symbol, not included to the result string.
      * @return string, composes from all read characters.
-     * @throws IOException if there's an input/output error occurred upon reading.
+     * @throws IOException            if there's an input/output error occurred upon reading.
      * @throws BencodeFormatException if there's an error related to the bencoding format.
      */
     public String readCharSequence(char stopSymbol) throws IOException, BencodeFormatException {
@@ -70,7 +75,7 @@ public final class BencodeStreamReader {
 
         int intValue;
         char charValue;
-        while(stopSymbolIsNotReached && ((intValue = is.read()) != -1)){
+        while (stopSymbolIsNotReached && ((intValue = is.read()) != -1)) {
             charValue = (char) intValue;
 
             stopSymbolIsNotReached = (charValue != stopSymbol);
@@ -82,7 +87,7 @@ public final class BencodeStreamReader {
 
         if (stopSymbolIsNotReached) {
             final String exceptionMessage = sb.length() > 0 ? "Stop symbol: '" + stopSymbol + "' was not reached" :
-                                                                                        "Unexpected end of the stream";
+                    "Unexpected end of the stream";
             throw new BencodeFormatException(exceptionMessage);
         }
 
