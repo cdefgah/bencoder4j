@@ -1,7 +1,7 @@
-package rafael.osipov.bencoder4j.model;
+package com.github.cdefgah.bencoder4j.model;
 
-import rafael.osipov.bencoder4j.BencodeFormatException;
-import rafael.osipov.bencoder4j.io.BencodeStreamReader;
+import com.github.cdefgah.bencoder4j.BencodeFormatException;
+import com.github.cdefgah.bencoder4j.io.BencodeStreamReader;
 
 import java.io.IOException;
 import java.io.OutputStream;

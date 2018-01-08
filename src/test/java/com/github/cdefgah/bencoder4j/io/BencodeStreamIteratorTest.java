@@ -1,8 +1,8 @@
-package rafael.osipov.bencoder4j.io;
+package com.github.cdefgah.bencoder4j.io;
 
+import com.github.cdefgah.bencoder4j.BencodeFormatException;
+import com.github.cdefgah.bencoder4j.model.*;
 import org.junit.jupiter.api.Test;
-import rafael.osipov.bencoder4j.BencodeFormatException;
-import rafael.osipov.bencoder4j.model.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

@@ -1,6 +1,6 @@
-package rafael.osipov.bencoder4j.model;
+package com.github.cdefgah.bencoder4j.model;
 
-import rafael.osipov.bencoder4j.CircularReferenceException;
+import com.github.cdefgah.bencoder4j.CircularReferenceException;
 
 import java.io.IOException;
 import java.io.OutputStream;

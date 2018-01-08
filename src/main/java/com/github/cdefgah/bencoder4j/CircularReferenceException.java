@@ -1,4 +1,4 @@
-package rafael.osipov.bencoder4j;
+package com.github.cdefgah.bencoder4j;
 
 /**
  * The exception to be thrown if there's a circular reference found.

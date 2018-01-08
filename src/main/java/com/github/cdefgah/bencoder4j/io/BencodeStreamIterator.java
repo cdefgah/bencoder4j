@@ -1,11 +1,11 @@
-package rafael.osipov.bencoder4j.io;
+package com.github.cdefgah.bencoder4j.io;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.NoSuchElementException;
 
-import rafael.osipov.bencoder4j.BencodeFormatException;
-import rafael.osipov.bencoder4j.model.*;
+import com.github.cdefgah.bencoder4j.BencodeFormatException;
+import com.github.cdefgah.bencoder4j.model.*;
 
 
 /**
@@ -22,8 +22,8 @@ public class BencodeStreamIterator {
      * if isLocalMode, we're looking for `e` suffix of a List/Dictionary object,
      * otherwise we scan until EOF (end of file).
      *
-     * @see rafael.osipov.bencoder4j.model.BencodedList
-     * @see rafael.osipov.bencoder4j.model.BencodedDictionary
+     * @see BencodedList
+     * @see BencodedDictionary
      */
     private final boolean isLocalMode;
 
@@ -41,8 +41,8 @@ public class BencodeStreamIterator {
      * Constructs local iterator, that processes stream to read elements of List/Dictionary object.
      *
      * @param bsr reference to bencoder4j stream reader.
-     * @see rafael.osipov.bencoder4j.model.BencodedList
-     * @see rafael.osipov.bencoder4j.model.BencodedDictionary
+     * @see BencodedList
+     * @see BencodedDictionary
      */
     public BencodeStreamIterator(BencodeStreamReader bsr) {
         this.bsr = bsr;

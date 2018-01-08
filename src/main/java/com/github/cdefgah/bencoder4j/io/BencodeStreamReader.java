@@ -1,6 +1,6 @@
-package rafael.osipov.bencoder4j.io;
+package com.github.cdefgah.bencoder4j.io;
 
-import rafael.osipov.bencoder4j.BencodeFormatException;
+import com.github.cdefgah.bencoder4j.BencodeFormatException;
 
 import java.io.IOException;
 import java.io.InputStream;

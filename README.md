@@ -18,22 +18,24 @@ Create a new Java Maven project in IDE of your choice and specify the following 
 
 ```xml
 <dependency>
-	<groupId>rafael.osipov</groupId>
+	<groupId>com.github.cdefgah</groupId>
 	<artifactId>bencoder4j</artifactId>
 	<version>1.0.0</version>
 </dependency>
 ```
 
-Below, there is a piece of code that writes a set of arbitrary objects to the `file.ben`, located in my home `Downloads` folder.
+Below, there is a piece of code that writes a set of arbitrary objects to the `file.ben`, located in my home `Downloads` folder. 
+
+Please note this example assumes you are running the code in Linux environment and note my Linux user name in the provided path. As you have another user name in Linux or you are running example in another operating system, please change value for `filePath` variable accordingly.
 
 ```java
 package example;
 
-import rafael.osipov.bencoder4j.CircularReferenceException;
-import rafael.osipov.bencoder4j.model.BencodedByteSequence;
-import rafael.osipov.bencoder4j.model.BencodedDictionary;
-import rafael.osipov.bencoder4j.model.BencodedInteger;
-import rafael.osipov.bencoder4j.model.BencodedList;
+import com.github.cdefgah.bencoder4j.CircularReferenceException;
+import com.github.cdefgah.bencoder4j.model.BencodedByteSequence;
+import com.github.cdefgah.bencoder4j.model.BencodedDictionary;
+import com.github.cdefgah.bencoder4j.model.BencodedInteger;
+import com.github.cdefgah.bencoder4j.model.BencodedList;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -63,6 +65,7 @@ public class WriterApp {
         bencodedDictionary.put(dictKey1, intDictElement);
         bencodedDictionary.put(dictKey2, bbsDictElement);
 
+
         String filePath = "/home/rafael/Downloads/file.ben";
         try (FileOutputStream fos = new FileOutputStream(filePath)) {
 
@@ -80,12 +83,14 @@ public class WriterApp {
 
 Now, as we have the composed `file.ben`in the `Downloads` folder, we can use the following code to read its contents.
 
+
+
 ```java
 package example;
 
-import rafael.osipov.bencoder4j.BencodeFormatException;
-import rafael.osipov.bencoder4j.io.BencodeStreamIterator;
-import rafael.osipov.bencoder4j.model.BencodedObject;
+import com.github.cdefgah.bencoder4j.BencodeFormatException;
+import com.github.cdefgah.bencoder4j.io.BencodeStreamIterator;
+import com.github.cdefgah.bencoder4j.model.BencodedObject;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -106,7 +111,9 @@ public class ReaderApp {
 }
 ```
 
-The provided use cases are the simplest ones. For more use cases inspect `tests` folder for the project.
+The provided use cases are the simplest ones. For more use cases look at the tests for the project.
+
+
 
 
 ## Licensing

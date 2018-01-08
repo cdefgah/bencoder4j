@@ -1,4 +1,4 @@
-package rafael.osipov.bencoder4j.io;
+package com.github.cdefgah.bencoder4j.io;
 
 import org.junit.jupiter.api.Test;
 
