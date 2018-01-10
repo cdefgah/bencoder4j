@@ -1,26 +1,18 @@
-# Bencode Serializer and Deserializer
+## Bencode Serializer and Deserializer
 
-[![Build Status](https://travis-ci.org/cdefgah/bencoder4j.svg?branch=master)](https://travis-ci.org/cdefgah/bencoder4j)
+[![Build Status](https://travis-ci.org/cdefgah/bencoder4j.svg?branch=master)](https://travis-ci.org/cdefgah/bencoder4j) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.cdefgah/bencoder4j/badge.svg)](http://search.maven.org/#artifactdetails%7Ccom.github.cdefgah%7Cbencoder4j%7C1.0.0%7Cjar)
 
 [Bit-torrent] encoding and decoding implementation for the Java programming language.
 
+### Simple use case
 
-
-## Simple use case
-
-Install the artifact to the local maven repository via the following command from the project folder:
-
-```bash
-mvn clean package install
-```
-
-Create a new Java Maven project in IDE of your choice and specify the following dependency in `pom.xml`
+This project is available as a [Maven](https://maven.apache.org/) [dependency](http://search.maven.org/#artifactdetails%7Ccom.github.cdefgah%7Cbencoder4j%7C1.0.0%7Cjar) :
 
 ```xml
 <dependency>
-	<groupId>com.github.cdefgah</groupId>
-	<artifactId>bencoder4j</artifactId>
-	<version>1.0.0</version>
+    <groupId>com.github.cdefgah</groupId>
+    <artifactId>bencoder4j</artifactId>
+    <version>1.0.0</version>
 </dependency>
 ```
 
@@ -80,9 +72,7 @@ public class WriterApp {
 ```
 
 
-
 Now, as we have the composed `file.ben`in the `Downloads` folder, we can use the following code to read its contents.
-
 
 
 ```java
@@ -114,10 +104,8 @@ public class ReaderApp {
 The provided use cases are the simplest ones. For more use cases look at the tests for the project.
 
 
+### Licensing
 
-
-## Licensing
-
-The project is distributed under [MIT License](https://opensource.org/licenses/MIT).
+[MIT License](https://github.com/cdefgah/bencoder4j/blob/master/LICENSE.txt)
 
 [Bit-Torrent]: https://en.wikipedia.org/wiki/Bencode
