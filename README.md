@@ -16,9 +16,9 @@ This project is available as a [Maven](https://maven.apache.org/) [dependency](h
 </dependency>
 ```
 
-Below, there is a piece of code that writes a set of arbitrary objects to the `file.ben`, located in my home `Downloads` folder. 
+Below, you can see a piece of code that writes a set of arbitrary objects to the `file.ben`, located in my home `Downloads` folder. 
 
-Please note this example assumes you are running the code in Linux environment and note my Linux user name in the provided path. As you have another user name in Linux or you are running example in another operating system, please change value for `filePath` variable accordingly.
+Bear in mind that provided examples fit my OS (Ubuntu Linux) and environment (path with my user name). Chances are that these parameters slightly differ in your case, so be sure to modify the `filePath` variable accordingly. 
 
 ```java
 package example;
@@ -101,8 +101,11 @@ public class ReaderApp {
 }
 ```
 
-The provided use cases are the simplest ones. For more use cases look at the tests for the project.
+Use cases given above are the most basic, simple examples. For more please refer to the tests for the project.
 
+### Documentation
+
+[bencoder4j/JavaDocs](https://cdefgah.github.io/bencoder4j/apidocs/index.html)
 
 ### Licensing
 
