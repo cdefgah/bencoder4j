@@ -31,13 +31,12 @@ public abstract class BencodedObject {
     }
 
     /**
-     * Returns the collection of composite object values, used to check circular references.
+     * Returns the collection of composite object values (list or dictionary values).
+     * This collection is being used for checking on circular references.
      * <p>
-     * If your class contains composite (list, map) values, override this method
-     * to return collection of these values, otherwise return empty collection.
+     *     By default returns empty collection (for non-composite objects).
      *
-     * @return collection of internal list/map values of the class instance if it is a composite class instance,
-     * otherwise, if it is not a composite class instance - returns empty collection.
+     * @return check the method description above.
      */
     protected Collection<BencodedObject> getCompositeValues() {
         return Collections.emptyList(); // by default, for non-composite objects
