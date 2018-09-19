@@ -118,7 +118,7 @@ class BencodedIntegerTest {
         // when a!=null, a.equals(a);
         BencodedInteger bint1 = new BencodedInteger(Long.MAX_VALUE);
 
-        assertTrue(bint1.equals(bint1));
+        assertEquals(bint1, bint1);
     }
 
     @Test
@@ -145,7 +145,7 @@ class BencodedIntegerTest {
         String someStringObject = "1234567890";
         BencodedInteger bint1 = new BencodedInteger(1234567890L);
 
-        assertFalse(bint1.equals(someStringObject));
+        assertNotEquals(bint1, someStringObject);
     }
 
     @Test
@@ -157,7 +157,7 @@ class BencodedIntegerTest {
         BencodedInteger bint1 = new BencodedInteger(Long.MAX_VALUE);
         BencodedInteger bint2 = new BencodedInteger(Long.MIN_VALUE);
 
-        assertFalse(bint1.equals(bint2));
+        assertNotEquals(bint1, bint2);
     }
 
     @Test
@@ -180,7 +180,7 @@ class BencodedIntegerTest {
         // a.equals(null) should return false
         BencodedInteger bint1 = new BencodedInteger(Long.MAX_VALUE);
 
-        assertFalse(bint1.equals(null));
+        assertNotEquals(null, bint1);
     }
 
     @Test

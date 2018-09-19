@@ -197,7 +197,7 @@ class BencodedListTest {
 
         boolean objectHasRemoved = bencodedList.remove(bint2);
         assertAll("Validating state after element removal",
-                () -> assertEquals(true, objectHasRemoved),
+                () -> assertTrue(objectHasRemoved),
                 () -> assertEquals(2, bencodedList.size())
         );
 
@@ -362,7 +362,7 @@ class BencodedListTest {
         bencodedList1.add(bbs1);
         bencodedList1.add(bint1);
 
-        assertTrue(bencodedList1.equals(bencodedList1));
+        assertEquals(bencodedList1, bencodedList1);
     }
 
 
@@ -406,7 +406,7 @@ class BencodedListTest {
         bencodedList1.add(bbs1);
         bencodedList1.add(bint1);
 
-        assertFalse(bencodedList1.equals(bint1));
+        assertNotEquals(bencodedList1, bint1);
     }
 
 
@@ -425,7 +425,7 @@ class BencodedListTest {
         bencodedList1.add(bint1);
         bencodedList2.add(bint2);
 
-        assertFalse(bencodedList1.equals(bencodedList2));
+        assertNotEquals(bencodedList1, bencodedList2);
     }
 
 
@@ -456,7 +456,7 @@ class BencodedListTest {
         BencodedList bencodedList1 = new BencodedList();
         bencodedList1.add(bint1);
 
-        assertFalse(bencodedList1.equals(null));
+        assertNotEquals(null, bencodedList1);
     }
 
 

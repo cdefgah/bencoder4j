@@ -248,7 +248,7 @@ class BencodedDictionaryTest {
         BencodedByteSequence value3 = new BencodedByteSequence("xyz");
 
         Iterator<BencodedByteSequence> keysIterator = dictionary.getKeysIterator();
-        assertAll("Testing desrialized dictionary contents",
+        assertAll("Testing deserialized dictionary contents",
                 () -> assertTrue(keysIterator.hasNext()),
                 () -> assertEquals(key1, keysIterator.next()),
                 () -> assertEquals(value1, dictionary.get(key1)),
@@ -356,7 +356,7 @@ class BencodedDictionaryTest {
         BencodedInteger value1 = new BencodedInteger(Long.MAX_VALUE);
         dictionary1.put(key1, value1);
 
-        assertTrue(dictionary1.equals(dictionary1));
+        assertEquals(dictionary1, dictionary1);
     }
 
 
@@ -415,7 +415,7 @@ class BencodedDictionaryTest {
         dictionary1.put(key1, value1);
         dictionary1.put(key2, value2);
 
-        assertFalse(dictionary1.equals(someStringObject));
+        assertNotEquals(dictionary1, someStringObject);
     }
 
     @Test
@@ -442,7 +442,7 @@ class BencodedDictionaryTest {
         dictionary2.put(key3, value3);
         dictionary2.put(key4, value4);
 
-        assertFalse(dictionary1.equals(dictionary2));
+        assertNotEquals(dictionary1, dictionary2);
     }
 
 
@@ -488,7 +488,7 @@ class BencodedDictionaryTest {
         dictionary1.put(key1, value1);
         dictionary1.put(key2, value2);
 
-        assertFalse(dictionary1.equals(null));
+        assertNotEquals(null, dictionary1);
     }
 
     @Test

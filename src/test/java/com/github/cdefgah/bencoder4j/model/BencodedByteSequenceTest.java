@@ -177,7 +177,7 @@ class BencodedByteSequenceTest {
         // when a!=null, a.equals(a);
         BencodedByteSequence bbs1 = new BencodedByteSequence("Значение 123-ABC");
 
-        assertTrue(bbs1.equals(bbs1));
+        assertEquals(bbs1, bbs1);
     }
 
     @Test
@@ -204,7 +204,7 @@ class BencodedByteSequenceTest {
         String someStringObject = "1234567890";
         BencodedByteSequence bbs1 = new BencodedByteSequence(someStringObject);
 
-        assertFalse(bbs1.equals(someStringObject));
+        assertNotEquals(bbs1, someStringObject);
     }
 
     @Test
@@ -216,7 +216,7 @@ class BencodedByteSequenceTest {
         BencodedByteSequence bbs1 = new BencodedByteSequence("Некое значение ABC-456");
         BencodedByteSequence bbs2 = new BencodedByteSequence("Некое значение XYZ-789");
 
-        assertFalse(bbs1.equals(bbs2));
+        assertNotEquals(bbs1, bbs2);
     }
 
     @Test
@@ -238,7 +238,7 @@ class BencodedByteSequenceTest {
         // a.equals(null) should return false
         BencodedByteSequence bbs1 = new BencodedByteSequence("Некое значение ABC-456");
 
-        assertFalse(bbs1.equals(null));
+        assertNotEquals(null, bbs1);
     }
 
     @Test
