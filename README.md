@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/cdefgah/bencoder4j.svg?branch=master)](https://travis-ci.org/cdefgah/bencoder4j) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.cdefgah/bencoder4j/badge.svg)](http://search.maven.org/#artifactdetails%7Ccom.github.cdefgah%7Cbencoder4j%7C1.0.0%7Cjar)
 
-[Bit-torrent] encoding and decoding implementation for the Java programming language.
+[Bit-torrent](https://en.wikipedia.org/wiki/Bencode) encoding and decoding implementation for the Java programming language.
 
 ### Simple use case
 
@@ -101,14 +101,12 @@ public class ReaderApp {
 }
 ```
 
-Use cases given above are the most basic, simple examples. For more please refer to the tests for the project.
+Use cases given above are the most basic, simple examples. For more please refer to [the tests](https://github.com/cdefgah/bencoder4j/tree/master/src/test) for the project.
 
 ### Documentation
 
-[bencoder4j/JavaDocs](https://cdefgah.github.io/bencoder4j/apidocs/index.html)
+[Project JavaDocs](https://cdefgah.github.io/bencoder4j/apidocs/index.html)
 
 ### Licensing
 
-[MIT License](https://github.com/cdefgah/bencoder4j/blob/master/LICENSE.txt)
-
-[Bit-Torrent]: https://en.wikipedia.org/wiki/Bencode
+[MIT License](https://github.com/cdefgah/bencoder4j/blob/master/LICENSE)
