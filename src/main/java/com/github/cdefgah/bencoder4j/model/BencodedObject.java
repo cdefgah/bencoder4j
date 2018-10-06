@@ -38,7 +38,7 @@ public abstract class BencodedObject {
      *
      * @return check the method description above.
      */
-    protected Collection<BencodedObject> getCompositeValues() {
+    Collection<BencodedObject> getCompositeValues() {
         return Collections.emptyList(); // by default, for non-composite objects
     }
 
@@ -53,7 +53,7 @@ public abstract class BencodedObject {
      * @throws IOException                if there's an input/output error occurred.
      * @throws CircularReferenceException if there's a circular reference detected upon writing to the stream.
      */
-    protected void writeObject(OutputStream os) throws IOException, CircularReferenceException {
+    void writeObject(OutputStream os) throws IOException, CircularReferenceException {
 
         // we're passing null to isCircularReferenceDetected() method, because we have no parent nodes list
         // when we call this method. But we'll have this parent nodes list on subsequent recursive calls

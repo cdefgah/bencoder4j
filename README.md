@@ -1,18 +1,18 @@
 ## Bencode Serializer and Deserializer
 
-[![Build Status](https://travis-ci.org/cdefgah/bencoder4j.svg?branch=master)](https://travis-ci.org/cdefgah/bencoder4j) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.cdefgah/bencoder4j/badge.svg)](http://search.maven.org/#artifactdetails%7Ccom.github.cdefgah%7Cbencoder4j%7C1.0.0%7Cjar)
+[![Build Status](https://travis-ci.org/cdefgah/bencoder4j.svg?branch=master)](https://travis-ci.org/cdefgah/bencoder4j) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.cdefgah/bencoder4j/badge.svg)](http://search.maven.org/#artifactdetails%7Ccom.github.cdefgah%7Cbencoder4j%7C1.1.0%7Cjar)
 
 [Bit-torrent](https://en.wikipedia.org/wiki/Bencode) encoding and decoding implementation for the Java programming language.
 
 ### Simple use case
 
-This project is available as a [Maven](https://maven.apache.org/) [dependency](http://search.maven.org/#artifactdetails%7Ccom.github.cdefgah%7Cbencoder4j%7C1.0.0%7Cjar) :
+This project is available as a [Maven](https://maven.apache.org/) [dependency](http://search.maven.org/#artifactdetails%7Ccom.github.cdefgah%7Cbencoder4j%7C1.1.0%7Cjar) :
 
 ```xml
 <dependency>
     <groupId>com.github.cdefgah</groupId>
     <artifactId>bencoder4j</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 
@@ -105,7 +105,9 @@ Use cases given above are the most basic, simple examples. For more please refer
 
 ### Documentation
 
-[Project JavaDocs](https://cdefgah.github.io/bencoder4j/apidocs/index.html)
+[Project API JavaDocs](https://cdefgah.github.io/bencoder4j/apidocs/index.html)
+
+[Changelog](https://github.com/cdefgah/bencoder4j/blob/master/CHANGELOG.md)
 
 ### Licensing
 

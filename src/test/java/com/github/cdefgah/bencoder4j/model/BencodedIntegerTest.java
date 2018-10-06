@@ -1,8 +1,9 @@
 package com.github.cdefgah.bencoder4j.model;
 
 import com.github.cdefgah.bencoder4j.BencodeFormatException;
-import org.junit.jupiter.api.Test;
 import com.github.cdefgah.bencoder4j.io.BencodeStreamReader;
+
+import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -172,7 +173,6 @@ class BencodedIntegerTest {
                 () -> assertEquals(bint1.hashCode(), bint2.hashCode())
         );
     }
-
 
     @SuppressWarnings("ObjectEqualsNull")
     @Test
@@ -350,5 +350,48 @@ class BencodedIntegerTest {
                 () -> assertFalse(bint.isCompositeObject()),
                 () -> assertEquals(0, bint.getCompositeValues().size())
         );
+    }
+
+    @Test
+    void testValueOf() {
+        long initialValue = -1234567890;
+        String initialString = String.valueOf(initialValue);
+        BencodedInteger bint = BencodedInteger.valueOf(initialString);
+
+        assertEquals(initialValue, bint.getValue());
+    }
+
+    @Test
+    void testValueOfWithIncorrectInitialString() {
+        assertThrows(NumberFormatException.class, () -> {
+            // consciously incorrect form of initial string
+
+            String initialString = "abc";
+            BencodedInteger.valueOf(initialString);
+
+        }, "BencodedInteger.valueOf(string) behaves incorrectly when used non-numeric string");
+    }
+
+    @Test
+    void testValueOfWithRadix() {
+        int radix = 17;
+        int initialValue = 1234567890;
+        String initialString = Long.toString(initialValue, radix);
+
+        BencodedInteger bint = BencodedInteger.valueOf(initialString, radix);
+
+        assertEquals(initialValue, bint.getValue());
+    }
+
+    @Test
+    void testValueOfWithRadixWithIncorrectInitialString() {
+        assertThrows(NumberFormatException.class, () -> {
+            // consciously incorrect form of initial string
+
+            int radix = 5;
+            String initialString = "abc";
+            BencodedInteger.valueOf(initialString, radix);
+
+        }, "BencodedInteger.valueOf(string, radix) behaves incorrectly when used non-numeric string");
     }
 }

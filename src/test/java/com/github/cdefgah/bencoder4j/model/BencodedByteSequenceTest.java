@@ -1,8 +1,9 @@
 package com.github.cdefgah.bencoder4j.model;
 
 import com.github.cdefgah.bencoder4j.BencodeFormatException;
-import org.junit.jupiter.api.Test;
 import com.github.cdefgah.bencoder4j.io.BencodeStreamReader;
+
+import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -146,7 +147,7 @@ class BencodedByteSequenceTest {
 
 
     @Test
-    void getValueWorksCorrectly() {
+    void getValueReturnsSafeCopy() {
         byte[] initialSequence = "Последовательность ABC".getBytes(StandardCharsets.UTF_8);
         BencodedByteSequence bbs = new BencodedByteSequence(initialSequence);
 

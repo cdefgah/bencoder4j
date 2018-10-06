@@ -2,12 +2,15 @@ package com.github.cdefgah.bencoder4j.model;
 
 import com.github.cdefgah.bencoder4j.BencodeFormatException;
 import com.github.cdefgah.bencoder4j.io.BencodeStreamReader;
-import org.junit.jupiter.api.Test;
 import com.github.cdefgah.bencoder4j.CircularReferenceException;
+
+import org.junit.jupiter.api.Test;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -649,5 +652,384 @@ class BencodedDictionaryTest {
         assertEquals(expectedExceptionMessage,
                 exception1.getMessage(),
                 unexpectedExceptionMessageDiagnostics);
+    }
+
+    @Test
+    void testDictionaryConstructorWithCorrectNotNullMapParameter() {
+        Map<BencodedByteSequence, BencodedObject> initialMap = new HashMap<>();
+
+        BencodedByteSequence key1 = new BencodedByteSequence("z");
+        BencodedByteSequence key2 = new BencodedByteSequence("y");
+        BencodedByteSequence key3 = new BencodedByteSequence("x");
+
+        BencodedInteger value1 = new BencodedInteger(1);
+        BencodedInteger value2 = new BencodedInteger(2);
+        BencodedInteger value3 = new BencodedInteger(3);
+
+        initialMap.put(key1, value1);
+        initialMap.put(key2, value2);
+        initialMap.put(key3, value3);
+
+        BencodedDictionary bencodedDictionary = new BencodedDictionary(initialMap);
+
+        Iterator<BencodedByteSequence> keysIterator = bencodedDictionary.getKeysIterator();
+
+        assertAll("BencodedDictionary constructor with Map parameters adds map elements in correct order",
+                () -> assertEquals(3, bencodedDictionary.size()),
+                () -> assertTrue(keysIterator.hasNext()),
+                () -> assertEquals(key3, keysIterator.next()),
+                () -> assertTrue(keysIterator.hasNext()),
+                () -> assertEquals(key2, keysIterator.next()),
+                () -> assertTrue(keysIterator.hasNext()),
+                () -> assertEquals(key1, keysIterator.next()),
+                () -> assertFalse(keysIterator.hasNext()),
+                () -> assertEquals(value3, bencodedDictionary.get(key3)),
+                () -> assertEquals(value2, bencodedDictionary.get(key2)),
+                () -> assertEquals(value1, bencodedDictionary.get(key1)));
+    }
+
+
+    @Test
+    void testDictionaryConstructorMapParameterWithNullKey() {
+        Map<BencodedByteSequence, BencodedObject> initialMap = new HashMap<>();
+
+        BencodedByteSequence key1 = null;
+        BencodedInteger value1 = new BencodedInteger(1);
+
+        initialMap.put(key1, value1);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+
+            new BencodedDictionary(initialMap);
+
+        }, "BencodedDictionary constructor with map parameter should throw IllegalArgumentException " +
+                "if initialMap contains null key. But it did not.");
+    }
+
+    @Test
+    void testDictionaryConstructorMapParameterWithNullValue() {
+        Map<BencodedByteSequence, BencodedObject> initialMap = new HashMap<>();
+
+        BencodedByteSequence key1 = new BencodedByteSequence("x");
+        BencodedInteger value1 = null;
+
+        initialMap.put(key1, value1);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+
+            new BencodedDictionary(initialMap);
+
+        }, "BencodedDictionary constructor with map parameter should throw IllegalArgumentException " +
+                "if initialMap contains null value. But it did not.");
+    }
+
+    @Test
+    void testDictionaryConstructorWithNullMapParameter() {
+        Map<BencodedByteSequence, BencodedObject> initialMap = null;
+        BencodedDictionary bencodedDictionary = new BencodedDictionary(initialMap);
+        Iterator<BencodedByteSequence> keysIterator = bencodedDictionary.getKeysIterator();
+
+        assertAll("BencodedDictionary constructor with Map parameters processes null parameter correctly",
+                () -> assertEquals(0, bencodedDictionary.size()),
+                () -> assertFalse(keysIterator.hasNext()),
+                () -> assertTrue(bencodedDictionary.isEmpty()));
+    }
+
+    @Test
+    void testClear() {
+
+        BencodedDictionary bencodedDictionary = new BencodedDictionary();
+
+        BencodedByteSequence key1 = new BencodedByteSequence("z");
+        BencodedInteger value1 = new BencodedInteger(1);
+
+        BencodedByteSequence key2 = new BencodedByteSequence("y");
+        BencodedInteger value2 = new BencodedInteger(2);
+
+        bencodedDictionary.put(key1, value1);
+        bencodedDictionary.put(key2, value2);
+
+        bencodedDictionary.clear();
+
+        Iterator<BencodedByteSequence> keysIterator = bencodedDictionary.getKeysIterator();
+
+        assertAll("clear() call for BencodedDictionary is being processed correctly",
+                () -> assertEquals(0, bencodedDictionary.size()),
+                () -> assertFalse(keysIterator.hasNext()),
+                () -> assertTrue(bencodedDictionary.isEmpty()));
+    }
+
+    @Test
+    void testSize() {
+        BencodedDictionary bencodedDictionary = new BencodedDictionary();
+
+        assertEquals(0, bencodedDictionary.size());
+
+        BencodedByteSequence key1 = new BencodedByteSequence("z");
+        BencodedInteger value1 = new BencodedInteger(1);
+
+        bencodedDictionary.put(key1, value1);
+        assertEquals(1, bencodedDictionary.size());
+
+        BencodedByteSequence key2 = new BencodedByteSequence("y");
+        BencodedInteger value2 = new BencodedInteger(2);
+        bencodedDictionary.put(key2, value2);
+
+        assertEquals(2, bencodedDictionary.size());
+
+        bencodedDictionary.remove(key1);
+        assertEquals(1, bencodedDictionary.size());
+
+        bencodedDictionary.remove(key2);
+        assertEquals(0, bencodedDictionary.size());
+    }
+
+    @Test
+    void testIsEmpty() {
+        BencodedDictionary bencodedDictionary = new BencodedDictionary();
+
+        assertTrue(bencodedDictionary.isEmpty());
+
+        BencodedByteSequence key1 = new BencodedByteSequence("z");
+        BencodedInteger value1 = new BencodedInteger(1);
+
+        bencodedDictionary.put(key1, value1);
+
+        assertFalse(bencodedDictionary.isEmpty());
+
+        bencodedDictionary.remove(key1);
+        assertTrue(bencodedDictionary.isEmpty());
+    }
+
+    @Test
+    void testContainsBencodedByteSequenceKey() {
+        BencodedDictionary bencodedDictionary = new BencodedDictionary();
+
+        BencodedByteSequence key1 = new BencodedByteSequence("z");
+        BencodedByteSequence key1AnotherReference = new BencodedByteSequence("z");
+        BencodedInteger value1 = new BencodedInteger(1);
+
+        BencodedByteSequence key2 = new BencodedByteSequence("x");
+
+        bencodedDictionary.put(key1, value1);
+        assertAll("BencodedDictionary.containsKey() for BencodedByteSequence type parameter works properly",
+                () -> assertTrue(bencodedDictionary.containsKey(key1)),
+                () -> assertTrue(bencodedDictionary.containsKey(key1AnotherReference)),
+                () -> assertFalse(bencodedDictionary.containsKey(key2)));
+
+        assertThrows(IllegalArgumentException.class, () ->
+                        {
+                            BencodedByteSequence key3 = null;
+                            bencodedDictionary.containsKey(key3);
+                        },
+                "BencodedDictionary containsKey() for BencodedByteSequence " +
+                                "parameter behaves incorrectly on null parameter. Expected IllegalArgumentException.");
+    }
+
+    @Test
+    void testContainsStringKey() {
+        BencodedDictionary bencodedDictionary = new BencodedDictionary();
+
+        String key1 = "z";
+        String key1AnotherReference = new String(key1);
+        BencodedInteger value1 = new BencodedInteger(1);
+        String key2 = "x";
+
+        bencodedDictionary.put(key1, value1);
+        assertAll("BencodedDictionary.containsKey() for String type parameter works properly",
+                () -> assertTrue(bencodedDictionary.containsKey(key1)),
+                () -> assertTrue(bencodedDictionary.containsKey(key1AnotherReference)),
+                () -> assertFalse(bencodedDictionary.containsKey(key2)));
+
+        assertThrows(IllegalArgumentException.class, () ->
+                {
+                    String key3 = null;
+                    bencodedDictionary.containsKey(key3);
+                },
+                "BencodedDictionary containsKey() for String " +
+                        "parameter behaves incorrectly on null parameter. Expected IllegalArgumentException.");
+    }
+
+    @Test
+    void testContainsValue() {
+        BencodedDictionary bencodedDictionary = new BencodedDictionary();
+
+        BencodedByteSequence key1 = new BencodedByteSequence("z");
+        BencodedInteger value1 = new BencodedInteger(1);
+        BencodedInteger value1AnotherInstance = new BencodedInteger(1);
+        BencodedInteger value2 = new BencodedInteger(2);
+
+        bencodedDictionary.put(key1, value1);
+
+        assertAll("BencodedDictionary.containsValue() works properly",
+                () -> assertTrue(bencodedDictionary.containsValue(value1)),
+                () -> assertTrue(bencodedDictionary.containsValue(value1AnotherInstance)),
+                () -> assertFalse(bencodedDictionary.containsValue(value2)));
+
+        assertThrows(IllegalArgumentException.class, () ->
+                {
+                    BencodedInteger value3 = null;
+                    bencodedDictionary.containsValue(value3);
+                },
+                "BencodedDictionary containsValue() behaves incorrectly on null parameter. " +
+                        "Expected IllegalArgumentException.");
+    }
+
+    @Test
+    void testGetByNonNullBencodedByteSequenceKey() {
+        BencodedDictionary bencodedDictionary = new BencodedDictionary();
+
+        BencodedByteSequence key1 = new BencodedByteSequence("z");
+        BencodedInteger value1 = new BencodedInteger(1);
+
+        bencodedDictionary.put(key1, value1);
+
+        assertSame(value1, bencodedDictionary.get(key1));
+    }
+
+    @Test
+    void testGetByNullBencodedByteSequenceKey() {
+        assertThrows(IllegalArgumentException.class, () ->
+                {
+                    BencodedDictionary bencodedDictionary = new BencodedDictionary();
+
+                    BencodedByteSequence key1 = new BencodedByteSequence("z");
+                    BencodedInteger value1 = new BencodedInteger(1);
+
+                    bencodedDictionary.put(key1, value1);
+
+                    BencodedByteSequence key2 = null;
+                    bencodedDictionary.get(key2);
+                },
+                "BencodedDictionary get(BencodedByteSequence) behaves incorrectly on null parameter. " +
+                        "Expected IllegalArgumentException.");
+    }
+
+    @Test
+    void testGetByNonNullStringKey() {
+        BencodedDictionary bencodedDictionary = new BencodedDictionary();
+
+        String key1 = "z";
+        BencodedInteger value1 = new BencodedInteger(1);
+
+        bencodedDictionary.put(key1, value1);
+
+        assertSame(value1, bencodedDictionary.get(key1));
+    }
+
+    @Test
+    void testGetByNullStringKey() {
+        assertThrows(IllegalArgumentException.class, () ->
+                {
+                    BencodedDictionary bencodedDictionary = new BencodedDictionary();
+
+                    String key1 = "x";
+                    BencodedInteger value1 = new BencodedInteger(3);
+
+                    bencodedDictionary.put(key1, value1);
+
+                    String key2 = null;
+                    bencodedDictionary.get(key2);
+                },
+                "BencodedDictionary get(String) behaves incorrectly on null parameter. " +
+                        "Expected IllegalArgumentException.");
+    }
+
+    @Test
+    void testRemoveByNullBencodedByteSequenceKey() {
+        assertThrows(IllegalArgumentException.class, () ->
+                {
+                    BencodedDictionary bencodedDictionary = new BencodedDictionary();
+
+                    BencodedByteSequence key1 = new BencodedByteSequence("x");
+                    BencodedInteger value1 = new BencodedInteger(3);
+
+                    bencodedDictionary.put(key1, value1);
+
+                    BencodedByteSequence key2 = null;
+                    bencodedDictionary.get(key2);
+                },
+                "BencodedDictionary remove(BencodedByteSequence) behaves incorrectly on null parameter. " +
+                        "Expected IllegalArgumentException.");
+    }
+
+    @Test
+    void testRemoveByNullStringKey() {
+        assertThrows(IllegalArgumentException.class, () ->
+                {
+                    BencodedDictionary bencodedDictionary = new BencodedDictionary();
+
+                    String key1 = "x";
+                    BencodedInteger value1 = new BencodedInteger(3);
+
+                    bencodedDictionary.put(key1, value1);
+
+                    BencodedByteSequence key2 = null;
+                    bencodedDictionary.get(key2);
+                },
+                "BencodedDictionary remove(String) behaves incorrectly on null parameter. " +
+                        "Expected IllegalArgumentException.");
+    }
+
+    @Test
+    void testRemoveByNonNullBencodedByteSequenceKey() {
+        BencodedDictionary bencodedDictionary = new BencodedDictionary();
+
+        BencodedByteSequence key1 = new BencodedByteSequence("a");
+        BencodedInteger value1 = new BencodedInteger(1);
+
+        bencodedDictionary.put(key1, value1);
+
+        BencodedObject removedObject = bencodedDictionary.remove(key1);
+
+        assertAll("BencodedDictionary.remove(BencodedByteSequence) works properly",
+                () -> assertSame(value1, removedObject),
+                () -> assertTrue(bencodedDictionary.isEmpty()),
+                () -> assertEquals(0, bencodedDictionary.size()));
+    }
+
+    @Test
+    void testRemoveByNonNullStringKey() {
+        BencodedDictionary bencodedDictionary = new BencodedDictionary();
+
+        String key1 = "b";
+        BencodedInteger value1 = new BencodedInteger(1);
+
+        bencodedDictionary.put(key1, value1);
+
+        BencodedObject removedObject = bencodedDictionary.remove(key1);
+
+        assertAll("BencodedDictionary.remove(String) works properly",
+                () -> assertSame(value1, removedObject),
+                () -> assertTrue(bencodedDictionary.isEmpty()),
+                () -> assertEquals(0, bencodedDictionary.size()));
+    }
+
+    @Test
+    void testDictionaryValuesIterator() {
+        BencodedByteSequence key1 = new BencodedByteSequence("333");
+        String key2 = "111";
+        String key3 = "222";
+
+        BencodedInteger value1 = new BencodedInteger(1);
+        BencodedInteger value2 = new BencodedInteger(2);
+        BencodedInteger value3 = new BencodedInteger(3);
+
+        BencodedDictionary dictionary = new BencodedDictionary();
+        dictionary.put(key1, value1);
+        dictionary.put(key2, value2);
+        dictionary.put(key3, value3);
+
+        Iterator<BencodedObject> valuesIterator = dictionary.getValuesIterator();
+
+        assertAll("Testing dictionary values iterator works properly",
+                () -> assertTrue(valuesIterator.hasNext()),
+                () -> assertEquals(value2, valuesIterator.next()),
+                () -> assertTrue(valuesIterator.hasNext()),
+                () -> assertEquals(value3, valuesIterator.next()),
+                () -> assertTrue(valuesIterator.hasNext()),
+                () -> assertEquals(value1, valuesIterator.next()),
+                () -> assertFalse(valuesIterator.hasNext())
+        );
     }
 }

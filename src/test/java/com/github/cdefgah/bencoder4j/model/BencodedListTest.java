@@ -1,9 +1,10 @@
 package com.github.cdefgah.bencoder4j.model;
 
 import com.github.cdefgah.bencoder4j.BencodeFormatException;
-import org.junit.jupiter.api.Test;
 import com.github.cdefgah.bencoder4j.CircularReferenceException;
 import com.github.cdefgah.bencoder4j.io.BencodeStreamReader;
+
+import org.junit.jupiter.api.Test;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -39,9 +40,9 @@ class BencodedListTest {
         }, "BencodedList should throw illegal argument exception on attempt to " +
                 "add a null element. But it does not.");
 
-        assertEquals("Null objects are not allowed for BencodedList",
+        assertEquals("Null elements are not allowed for BencodedList",
                 exception.getMessage(),
-                "Unexpected message in correctly thrown exception");
+                "Unexpected message in the correctly thrown exception");
 
     }
 
@@ -714,5 +715,135 @@ class BencodedListTest {
                 () -> assertTrue(bencodedList.isCompositeObject()),
                 () -> assertEquals(2, bencodedList.getCompositeValues().size())
         );
+    }
+
+    @Test
+    void testConstructorWithCorrectIterableArgument() {
+        List<BencodedObject> initialList = new ArrayList<>();
+
+        BencodedInteger element1 = new BencodedInteger(1);
+        BencodedInteger element2 = new BencodedInteger(2);
+        BencodedByteSequence element3 = new BencodedByteSequence("abc");
+
+        initialList.add(element1);
+        initialList.add(element2);
+        initialList.add(element3);
+
+        BencodedList bencodedList = new BencodedList(initialList);
+
+        assertAll("BencodedList(Iterable) constructor works properly with correct argument",
+                () -> assertEquals(3, bencodedList.size()),
+                () -> assertSame(element1, bencodedList.get(0)),
+                () -> assertSame(element2, bencodedList.get(1)),
+                () -> assertSame(element3, bencodedList.get(2)));
+    }
+
+    @Test
+    void testConstructorWithNullIterableArgument() {
+
+        List<BencodedObject> initialList = null;
+
+        assertThrows(IllegalArgumentException.class, () ->
+                {
+                    new BencodedList(initialList);
+                },
+                "BencodedList(Iterable) constructor behaves incorrectly on null argument. " +
+                        "Expected IllegalArgumentException.");
+    }
+
+    @Test
+    void testConstructorWithIterableArgumentThatContainsNullElements() {
+        List<BencodedObject> initialList = new ArrayList<>();
+
+        BencodedInteger element1 = new BencodedInteger(123);
+        BencodedInteger element2 = null;
+
+        initialList.add(element1);
+        initialList.add(element2);
+
+        assertThrows(IllegalArgumentException.class, () ->
+                {
+                    new BencodedList(initialList);
+                },
+                "BencodedList(Iterable) constructor behaves incorrectly on non-null argument, that contains" +
+                        " null elements inside. " +
+                        "Expected IllegalArgumentException.");
+    }
+
+    @Test
+    void testIndexOfWithNonNullArgument() {
+        BencodedList bencodedList = new BencodedList();
+
+        BencodedInteger element1 = new BencodedInteger(1);
+        BencodedInteger element2 = new BencodedInteger(2);
+        BencodedInteger element3 = new BencodedInteger(3);
+
+        bencodedList.add(element1);
+        bencodedList.add(element2);
+
+        assertAll("BencodedList.indexOf() works properly with correct argument",
+                () -> assertEquals(1, bencodedList.indexOf(element2)),
+                () -> assertEquals(0, bencodedList.indexOf(element1)),
+                () -> assertEquals(-1, bencodedList.indexOf(element3)));
+    }
+
+    @Test
+    void testIndexOfWithNullArgument() {
+        BencodedList bencodedList = new BencodedList();
+
+        BencodedInteger element1 = new BencodedInteger(1);
+        BencodedInteger element2 = null;
+
+        bencodedList.add(element1);
+
+        assertThrows(IllegalArgumentException.class, () ->
+                {
+                    bencodedList.indexOf(element2);
+                },
+                "BencodedList.indexOf() works incorrectly on null argument. " +
+                        "Expected IllegalArgumentException.");
+    }
+
+    @Test
+    void testLastIndexOfWithNonNullArgument() {
+        BencodedList bencodedList = new BencodedList();
+
+        BencodedInteger element1 = new BencodedInteger(1);
+        BencodedInteger element2 = new BencodedInteger(2);
+        BencodedInteger element3 = new BencodedInteger(3);
+        BencodedInteger element4 = new BencodedInteger(4);
+
+        bencodedList.add(element1);
+        bencodedList.add(element2);
+        bencodedList.add(element3);
+        bencodedList.add(element1);
+        bencodedList.add(element2);
+        bencodedList.add(element3);
+        bencodedList.add(element1);
+        bencodedList.add(element2);
+        bencodedList.add(element3);
+
+        assertAll("BencodedList.lastIndexOf() works properly with correct argument",
+                () -> assertEquals(7, bencodedList.lastIndexOf(element2)),
+                () -> assertEquals(6, bencodedList.lastIndexOf(element1)),
+                () -> assertEquals(8, bencodedList.lastIndexOf(element3)),
+                () -> assertEquals(-1, bencodedList.lastIndexOf(element4)));
+    }
+
+    @Test
+    void testLastIndexOfWithNullArgument() {
+        BencodedList bencodedList = new BencodedList();
+
+        BencodedInteger element1 = new BencodedInteger(1);
+        BencodedInteger element2 = null;
+
+        bencodedList.add(element1);
+
+        assertThrows(IllegalArgumentException.class, () ->
+                {
+                    bencodedList.lastIndexOf(element2);
+                },
+                "BencodedList.lastIndexOf() works incorrectly on null argument. " +
+                        "Expected IllegalArgumentException.");
     }
 }

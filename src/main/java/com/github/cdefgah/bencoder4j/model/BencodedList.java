@@ -29,14 +29,32 @@ public final class BencodedList extends BencodedObject implements Iterable<Benco
     /**
      * The list body.
      */
-    private final List<BencodedObject> listContents;
+    private final List<BencodedObject> listContents = new ArrayList<>();
 
     /**
      * Constructs the class instance.
      */
     public BencodedList() {
         super();
-        this.listContents = new ArrayList<>();
+    }
+
+    /**
+     * Constructs the class instance, based on another collection of elements.
+     *
+     * @param items source collection of elements,
+     *              all references to elements are being copied to the class instance.
+     * @throws IllegalArgumentException if items argument is null.
+     */
+    public BencodedList(Iterable<BencodedObject> items) {
+        super();
+
+        if (items == null) {
+            throw new IllegalArgumentException("Null argument is not allowed for BencodedList constructor");
+        }
+
+        for (BencodedObject item : items) {
+            this.add(item);
+        }
     }
 
     /**
@@ -55,8 +73,6 @@ public final class BencodedList extends BencodedObject implements Iterable<Benco
                     "Incorrect stream position, " +
                             "expected prefix character: " + SERIALIZED_PREFIX);
         }
-
-        this.listContents = new ArrayList<>();
 
         final BencodeStreamIterator bsi = new BencodeStreamIterator(bsr);
         while (bsi.hasNext()) {
@@ -116,7 +132,6 @@ public final class BencodedList extends BencodedObject implements Iterable<Benco
         this.listContents.add(index, bo);
     }
 
-
     /**
      * Gets a bencoded object from the list by provided index.
      *
@@ -127,7 +142,6 @@ public final class BencodedList extends BencodedObject implements Iterable<Benco
         checkListIndex(index);
         return listContents.get(index);
     }
-
 
     /**
      * Removes the object from the list.
@@ -156,7 +170,6 @@ public final class BencodedList extends BencodedObject implements Iterable<Benco
     public void clear() {
         listContents.clear();
     }
-
 
     /**
      * Returns true if the list contains the specified object.
@@ -198,15 +211,60 @@ public final class BencodedList extends BencodedObject implements Iterable<Benco
     }
 
     /**
+     * Returns the index of the first occurrence of the specified element in this list,
+     * or -1 if this list does not contain the element.
+     *
+     * More formally, returns the lowest index i such that
+     * (o==null ? get(i)==null : o.equals(get(i))), or -1 if there is no such index.
+     *
+     * @param object element to search for.
+     *
+     * @return the index of the first occurrence of the specified element in this list,
+     * or -1 if this list does not contain the element.
+     *
+     * @throws IllegalArgumentException if object argument is null.
+     */
+    public int indexOf(BencodedObject object) {
+        if (object == null) {
+            throw new IllegalArgumentException("Null argument is not allowed for BencodedList.indexOf()");
+        }
+
+        return listContents.indexOf(object);
+    }
+
+
+    /**
+     * Returns the index of the last occurrence of the specified element in this list,
+     * or -1 if this list does not contain the element.
+     *
+     * More formally, returns the highest index i such that
+     * (o==null ? get(i)==null : o.equals(get(i))), or -1 if there is no such index.
+     *
+     * @param object element to search for.
+     *
+     * @return the index of the last occurrence of the specified element in this list,
+     * or -1 if this list does not contain the element.
+     *
+     * @throws IllegalArgumentException if object argument is null.
+     */
+    public int lastIndexOf(BencodedObject object) {
+        if (object == null) {
+            throw new IllegalArgumentException("Null argument is not allowed for BencodedList.lastIndexOf()");
+        }
+
+        return listContents.lastIndexOf(object);
+    }
+
+
+    /**
      * Gets collection of list values.
      *
      * @return collection of list values.
      */
     @Override
-    protected Collection<BencodedObject> getCompositeValues() {
+    Collection<BencodedObject> getCompositeValues() {
         return listContents;
     }
-
 
     /**
      * Compares the class instance with another instance of this class.
@@ -232,7 +290,6 @@ public final class BencodedList extends BencodedObject implements Iterable<Benco
         return Objects.hash(listContents);
     }
 
-
     /**
      * Checks the provided list index on correctness.
      *
@@ -250,9 +307,9 @@ public final class BencodedList extends BencodedObject implements Iterable<Benco
      *
      * @param bo the object to be added.
      */
-    private void checkObjectToBeAdded(BencodedObject bo) {
+    private static void checkObjectToBeAdded(BencodedObject bo) {
         if (bo == null) {
-            throw new IllegalArgumentException("Null objects are not allowed for BencodedList");
+            throw new IllegalArgumentException("Null elements are not allowed for BencodedList");
         }
     }
 }

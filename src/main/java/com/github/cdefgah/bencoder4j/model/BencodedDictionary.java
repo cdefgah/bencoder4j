@@ -30,13 +30,31 @@ public final class BencodedDictionary extends BencodedObject {
     /**
      * Dictionary body.
      */
-    private final Map<BencodedByteSequence, BencodedObject> dictionary;
+    private final Map<BencodedByteSequence, BencodedObject> dictionary = new TreeMap<>();
 
     /**
      * Constructs the class instance.
      */
     public BencodedDictionary() {
-        this.dictionary = new TreeMap<>();
+        super();
+    }
+
+    /**
+     * Constructs the class instance, based on a map with bencoded objects.
+     *
+     * @param initialMap initial map.
+     * @throws IllegalArgumentException if initialMap contains null keys or values.
+     */
+    public BencodedDictionary(Map<BencodedByteSequence, BencodedObject> initialMap) {
+        super();
+
+        if (initialMap == null) {
+            return;
+        }
+
+        for (Map.Entry<BencodedByteSequence, BencodedObject> entry: initialMap.entrySet()) {
+            this.put(entry.getKey(), entry.getValue());
+        }
     }
 
     /**
@@ -54,8 +72,6 @@ public final class BencodedDictionary extends BencodedObject {
                     "Incorrect stream position, " +
                             "expected prefix character: " + SERIALIZED_PREFIX);
         }
-
-        this.dictionary = new TreeMap<>();
 
         final BencodeStreamIterator bsi = new BencodeStreamIterator(bsr);
         while (bsi.hasNext()) {
@@ -100,8 +116,10 @@ public final class BencodedDictionary extends BencodedObject {
      *
      * @param keyObject key to be used to get the object from the dictionary.
      * @return object from the dictionary mapped to the provided keyObject.
+     * @throws IllegalArgumentException if key is null.
      */
     public BencodedObject get(BencodedByteSequence keyObject) {
+        checkNullKey(keyObject);
         return this.dictionary.get(keyObject);
     }
 
@@ -111,8 +129,10 @@ public final class BencodedDictionary extends BencodedObject {
      * @param key key to be used to get the object from the dictionary, string
      *            will be converted to BencodedByteSequence object.
      * @return object from the dictionary mapped to the provided key.
+     * @throws IllegalArgumentException if key is null.
      */
     public BencodedObject get(String key) {
+        checkNullKey(key);
         return this.dictionary.get(new BencodedByteSequence(key));
     }
 
@@ -122,7 +142,7 @@ public final class BencodedDictionary extends BencodedObject {
      * @return collection of dictionary values.
      */
     @Override
-    protected Collection<BencodedObject> getCompositeValues() {
+    Collection<BencodedObject> getCompositeValues() {
         return this.dictionary.values();
     }
 
@@ -165,6 +185,7 @@ public final class BencodedDictionary extends BencodedObject {
      *
      * @param keyObject      key to be used to put the object to the dictionary.
      * @param bencodedObject object, to put to the dictionary.
+     * @throws IllegalArgumentException if either key or value is null.
      */
     public void put(BencodedByteSequence keyObject, BencodedObject bencodedObject) {
         checkPutParameters(keyObject, bencodedObject);
@@ -177,12 +198,114 @@ public final class BencodedDictionary extends BencodedObject {
      * @param key            key to be used to put the object to the dictionary, the string
      *                       will be converted to BencodedByteSequence instance.
      * @param bencodedObject object, to put to the dictionary.
+     * @throws IllegalArgumentException if either key or value is null.
      */
     public void put(String key, BencodedObject bencodedObject) {
         checkPutParameters(key, bencodedObject);
 
         final BencodedByteSequence bbsKey = new BencodedByteSequence(key);
         this.dictionary.put(bbsKey, bencodedObject);
+    }
+
+    /**
+     * Removes all of the mappings from this map. The map will be empty after this call returns.
+     */
+    public void clear() {
+        this.dictionary.clear();
+    }
+
+    /**
+     * Returns true if this map contains a mapping for the specified key.
+     *
+     * @param key the key.
+     * @return true if this map contains a mapping for the specified key.
+     * @throws IllegalArgumentException if key is null.
+     */
+    public boolean containsKey(BencodedByteSequence key) {
+        checkNullKey(key);
+        return this.dictionary.containsKey(key);
+    }
+
+    /**
+     * Returns true if this map contains a mapping for the specified key.
+     *
+     * @param key the key.
+     * @return true if this map contains a mapping for the specified key.
+     * @throws IllegalArgumentException if key is null.
+     */
+    public boolean containsKey(String key) {
+        checkNullKey(key);
+        return this.dictionary.containsKey(new BencodedByteSequence(key));
+    }
+
+    /**
+     * Returns true if this map maps one or more keys to the specified value.
+     * More formally, returns true if and only if this map contains at least
+     * one mapping to a value v such that (value==null ? v==null : value.equals(v)).
+     * <p>
+     * This operation will probably require time linear in the map size for most implementations.
+     *
+     * @param value value whose presence in this map is to be tested.
+     * @return true if a mapping to value exists; false otherwise.
+     * @throws IllegalArgumentException if value is null.
+     */
+    public boolean containsValue(BencodedObject value) {
+        if (value == null) {
+            throw new IllegalArgumentException("Null values are not allowed for BencodedDictionary instances");
+        }
+
+        return this.dictionary.containsValue(value);
+    }
+
+    /**
+     * Removes the mapping for this key from this TreeMap if present.
+     *
+     * @param key key for which mapping should be removed.
+     * @return the previous value associated with key, or null if there was no mapping for key.
+     * @throws IllegalArgumentException if key is null.
+     */
+    public BencodedObject remove(BencodedByteSequence key) {
+        checkNullKey(key);
+        return this.dictionary.remove(key);
+    }
+
+    /**
+     * Removes the mapping for this key from this TreeMap if present.
+     *
+     * @param key key for which mapping should be removed.
+     * @return the previous value associated with key, or null if there was no mapping for key.
+     * @throws IllegalArgumentException if key is null.
+     */
+    public BencodedObject remove(String key) {
+        checkNullKey(key);
+        return this.dictionary.remove(new BencodedByteSequence(key));
+    }
+
+    /**
+     * Returns the number of key-value mappings in this map.
+     *
+     * @return the number of key-value mappings in this map.
+     */
+    public int size() {
+        return this.dictionary.size();
+    }
+
+    /**
+     * Returns the iterator over dictionary values.
+     *
+     * @return the iterator over dictionary values.
+     */
+    public Iterator<BencodedObject> getValuesIterator() {
+        return this.dictionary.values().iterator();
+    }
+
+    /**
+     * Returns true if dictionary is empty.
+     *
+     * @return true if dictionary is empty.
+     */
+    public boolean isEmpty() {
+        return this.dictionary.isEmpty();
     }
 
     /**
@@ -236,14 +359,26 @@ public final class BencodedDictionary extends BencodedObject {
      *
      * @param keyObject      key to be used to put the object to the dictionary.
      * @param bencodedObject object to be put to the dictionary.
+     * @throws IllegalArgumentException if either of both key or value objects are nulls.
      */
-    private void checkPutParameters(Object keyObject, BencodedObject bencodedObject) {
+    private static void checkPutParameters(Object keyObject, BencodedObject bencodedObject) {
         if (null == keyObject) {
             throw new IllegalArgumentException("'keyObject' value for BencodedDictionary cannot be null!");
         }
 
         if (null == bencodedObject) {
             throw new IllegalArgumentException("'bencodedObject' value for BencodedDictionary cannot be null!");
+        }
+    }
+
+    /**
+     * Checks if key is null. If key is not null, nothing happens, otherwise NullPointerException is being thrown.
+     * @param key key to be checked.
+     * @throws IllegalArgumentException if key is null.
+     */
+    private static void checkNullKey(Object key) {
+        if (key == null) {
+            throw new IllegalArgumentException("Null keys are not allowed for BencodedDictionary instances");
         }
     }
 }

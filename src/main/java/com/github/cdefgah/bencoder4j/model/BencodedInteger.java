@@ -67,6 +67,44 @@ public final class BencodedInteger extends BencodedObject implements Comparable<
     }
 
     /**
+     * Returns a BencodedInteger object holding the value of the specified String.
+     *
+     * The argument is interpreted as representing a signed decimal long,
+     * exactly as if the argument were given to the Long.parseLong(java.lang.String) method.
+     *
+     * @param string the string to be parsed to long value and then used to build a BencodedInteger instance.
+     *
+     * @return a BencodedInteger object holding the long integer value represented by the string argument.
+     *
+     * @throws NumberFormatException If the string cannot be parsed as a long.
+     */
+    public static BencodedInteger valueOf(String string) throws NumberFormatException {
+        return new BencodedInteger(Long.valueOf(string));
+    }
+
+
+    /**
+     * Returns a BencodedInteger object holding the value extracted from the specified String
+     * when parsed with the radix given by the second argument.
+     *
+     * The first argument is interpreted as representing a signed long in the radix specified by the second argument,
+     * exactly as if the arguments were given to the Long.parseLong(java.lang.String, int) method.
+     *
+     * @param string the string to be parsed to long value and then used to build a BencodedInteger instance.
+     *
+     * @param radix the radix to be used in interpreting string.
+     *
+     * @return a BencodedInteger object holding the long integer value
+     * represented by the string argument in the specified radix.
+     *
+     * @throws NumberFormatException If the String does not contain a parsable long.
+     */
+    public static BencodedInteger valueOf(String string, int radix) throws NumberFormatException {
+        return new BencodedInteger(Long.valueOf(string, radix));
+    }
+
+
+    /**
      * Compares the class instance with another instance of this class.
      *
      * @param obj reference to another instance of this class.
@@ -90,6 +128,7 @@ public final class BencodedInteger extends BencodedObject implements Comparable<
 
         return Objects.hash(value);
     }
+
 
     /**
      * Returns the stored numeric value as long integer.
