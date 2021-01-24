@@ -105,7 +105,7 @@ Use cases given above are the most basic, simple examples. For more please refer
 
 ### Documentation
 
-[Project API JavaDocs](https://cdefgah.github.io/bencoder4j/apidocs/index.html)
+[API Documentation](https://cdefgah.github.io/bencoder4j/apidocs/index.html)
 
 [Changelog](https://github.com/cdefgah/bencoder4j/blob/master/CHANGELOG.md)
 
