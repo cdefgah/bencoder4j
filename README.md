@@ -1,6 +1,6 @@
 ## Bencode Serializer and Deserializer
 
-[![Build Status](https://travis-ci.org/cdefgah/bencoder4j.svg?branch=master)](https://travis-ci.org/cdefgah/bencoder4j) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.cdefgah/bencoder4j/badge.svg)](http://search.maven.org/#artifactdetails%7Ccom.github.cdefgah%7Cbencoder4j%7C1.1.0%7Cjar)
+[![Build Status](https://github.com/cdefgah/bencoder4j/workflows/build/badge.svg)](https://github.com/cdefgah/bencoder4j/actions) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.cdefgah/bencoder4j/badge.svg)](http://search.maven.org/#artifactdetails%7Ccom.github.cdefgah%7Cbencoder4j%7C1.1.0%7Cjar)
 
 [Bit-torrent](https://en.wikipedia.org/wiki/Bencode) encoding and decoding implementation for the Java programming language.
 
