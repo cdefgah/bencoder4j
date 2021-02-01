@@ -6,7 +6,7 @@
 
 ### Simple use case
 
-This project is available as a [Maven](https://maven.apache.org/) [dependency](http://search.maven.org/#artifactdetails%7Ccom.github.cdefgah%7Cbencoder4j%7C1.1.0%7Cjar) :
+This project is available as a [Maven](https://maven.apache.org/) [dependency](http://search.maven.org/#artifactdetails%7Ccom.github.cdefgah%7Cbencoder4j%7C1.1.0%7Cjar):
 
 ```xml
 <dependency>
