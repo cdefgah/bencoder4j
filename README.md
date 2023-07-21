@@ -71,7 +71,6 @@ public class WriterApp {
 }
 ```
 
-
 Now, as we have the composed `file.ben`in the `Downloads` folder, we can use the following code to read its contents.
 
 
