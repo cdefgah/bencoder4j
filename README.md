@@ -1,7 +1,5 @@
 ## Bencode Serializer and Deserializer
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.cdefgah/bencoder4j/badge.svg)](http://search.maven.org/#artifactdetails%7Ccom.github.cdefgah%7Cbencoder4j%7C1.1.0%7Cjar)
-
 [Bit-torrent](https://en.wikipedia.org/wiki/Bencode) encoding and decoding implementation for the Java programming language.
 
 ### Simple use case
